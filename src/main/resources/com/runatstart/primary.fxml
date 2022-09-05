@@ -57,8 +57,8 @@
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="446.0">
               <children>
                 <Label alignment="CENTER" font="$x1" layoutX="155.0" layoutY="11.0" prefHeight="31.0" prefWidth="135.0" style="&#10;" text="Run at start" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                        <ListView layoutX="14.0" layoutY="42.0" prefHeight="505.0" prefWidth="420.0" />
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddItem" text="Add from explorer" />
+                        <ListView fx:id="startItems" layoutX="14.0" layoutY="42.0" prefHeight="505.0" prefWidth="420.0" />
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddStartItem" text="Add from explorer" />
               </children>
             </AnchorPane>
                </content>

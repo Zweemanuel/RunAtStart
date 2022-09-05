@@ -11,44 +11,49 @@ import javafx.scene.control.ListView;
 public class PrimaryController implements Initializable{
 
     @FXML
-    private ListView<String> allItems;
+    private ListView<File> allItems;
+    @FXML
+    private ListView<File> startItems;
 
     @FXML
-    private void showAllItems() throws IOException {
-        allItems.getItems().clear();
-        String[] pathnames;
-        File f = new File("C:/ProgramData/Microsoft/Windows/Start Menu/Programs");
-        pathnames = f.list();
-
-        for (String pathname : pathnames) {
-            // Print the names of files and directories
-            System.out.println(pathname);
-            allItems.getItems().add(pathname);
+    private void showItems(String pathname, ListView<File> listV) throws IOException {
+        File f = new File(pathname);
+        File[] fileList = f.listFiles();
+        for (File file : fileList) {
+            
+            if(file.isFile()){
+                System.out.println(file.getName());
+                listV.getItems().add(file);
+            }else{
+                showItems(pathname+"/"+file.getName(),listV);
+            }
         }
     }
 
+    
     @FXML
     private void RefreshLists() throws IOException {
         allItems.getItems().clear();
-        showAllItems();
+        startItems.getItems().clear();
+        showItems("C:/ProgramData/Microsoft/Windows/Start Menu/Programs",allItems);
+        showItems("C:/ProgramData/Microsoft/Windows/Start Menu/Programs",startItems);
         System.out.println("Lists cleared");
         
     }
 
     @FXML
-    private void AddItem() throws IOException {
+    private void AddStartItem() throws IOException {
         
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         try {
-            this.showAllItems();
+            this.showItems("C:/ProgramData/Microsoft/Windows/Start Menu/Programs",allItems);
+            this.showItems("C:/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp",startItems);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
     }
 
 }
