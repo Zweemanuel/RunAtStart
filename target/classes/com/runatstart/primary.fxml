@@ -22,10 +22,14 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-                  <MenuItem mnemonicParsing="false" onAction="#RefreshLists" text="Refresh" />
             <MenuItem mnemonicParsing="false" text="Quit" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="View">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#RefreshLists" text="Refresh" />
+               </items>
+            </Menu>
         <Menu disable="true" mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="About RunAtStart" />
