@@ -19,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 
 public class PrimaryController implements Initializable{
 
+    String allPath = "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/", startPath = "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp/";
+
     @FXML
     private ListView<File> allItems;
     @FXML
@@ -46,7 +48,7 @@ public class PrimaryController implements Initializable{
         File[] fileList = f.listFiles();
         for (File file : fileList) {
             if(file.isFile() ){
-                if(file.getName().contains(".txt")){//Only show shortcuts to applications
+                if(file.getName().contains(".lnk")){//Only show shortcuts to applications
                     listV.getItems().add(file);
                 }
             }else{
@@ -61,8 +63,8 @@ public class PrimaryController implements Initializable{
     private void RefreshLists() throws IOException {
         startItems.getItems().clear();
         allItems.getItems().clear();
-        showItems("C:/Users/Emanuel/Desktop/TestFolder/startItems/",startItems);
-        showItems("C:/Users/Emanuel/Desktop/TestFolder/allItems/",allItems);
+        showItems(startPath,startItems);
+        showItems(allPath,allItems);
         
         //Removing files from the AllItems ListView for UX
         List<File> toRemove = new ArrayList<>();
@@ -88,7 +90,7 @@ public class PrimaryController implements Initializable{
             public void handle(MouseEvent click) {//Removes the clicked file to the startup folder
                 if (click.getClickCount() >= 2) {
                     File currentItemSelected = startItems.getSelectionModel().getSelectedItem();
-                    Path source = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/startItems/"+currentItemSelected.getName());
+                    Path source = Paths.get(startPath+currentItemSelected.getName());
                     try {
                         Files.delete(source);;
                         RefreshLists();
@@ -110,7 +112,7 @@ public class PrimaryController implements Initializable{
                 if (click.getClickCount() == 2) {
                     File currentItemSelected = allItems.getSelectionModel().getSelectedItem();
                     Path source = Paths.get(currentItemSelected.toString());
-                    Path destination = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/startItems/"+currentItemSelected.getName());
+                    Path destination = Paths.get(startPath+currentItemSelected.getName());
                     try {
                         Files.copy(source, destination);
                         RefreshLists();
@@ -126,6 +128,14 @@ public class PrimaryController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        
+        // Path path = Paths.get("C:/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp");
+
+        // try {
+        //     Files.setAttribute(path, "dos:readonly", false);
+        // } catch (IOException e1) {
+        //     e1.printStackTrace();
+        // }
         try {
             RefreshLists();
         } catch (IOException e) {

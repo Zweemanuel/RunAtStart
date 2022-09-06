@@ -21,6 +21,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("primary"), 910, 620);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.setTitle("Run At Start");
         stage.show();
     }
 
