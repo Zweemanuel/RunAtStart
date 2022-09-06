@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
@@ -23,6 +24,21 @@ public class PrimaryController implements Initializable{
     @FXML
     private ListView<File> startItems;
     
+    public void changeListView(ListView<File> list){
+        list.setCellFactory(lv -> new ListCell<File>() {
+            @Override
+            public void updateItem(File item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+    }
+    
+
     @FXML
     private void showItems(String pathname, ListView<File> listV) throws IOException {
         
@@ -39,7 +55,6 @@ public class PrimaryController implements Initializable{
         }
     }
 
-    
 
     
     @FXML
@@ -118,7 +133,8 @@ public class PrimaryController implements Initializable{
         }
         moveToStart();
         removeFromStart();
-        
+        changeListView(startItems);
+        changeListView(allItems);
     }
 
 }
