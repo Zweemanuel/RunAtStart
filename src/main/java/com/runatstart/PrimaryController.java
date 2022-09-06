@@ -29,8 +29,10 @@ public class PrimaryController implements Initializable{
         File f = new File(pathname);
         File[] fileList = f.listFiles();
         for (File file : fileList) {
-            if(file.isFile()){
-                listV.getItems().add(file);
+            if(file.isFile() ){
+                if(file.getName().contains(".txt")){//Only show shortcuts to applications
+                    listV.getItems().add(file);
+                }
             }else{
                 showItems(pathname+"/"+file.getName(),listV);
             }
@@ -90,7 +92,7 @@ public class PrimaryController implements Initializable{
 
             @Override
             public void handle(MouseEvent click) {//Copies the clicked file to the startup folder
-                if (click.getClickCount() >= 2) {
+                if (click.getClickCount() == 2) {
                     File currentItemSelected = allItems.getSelectionModel().getSelectedItem();
                     Path source = Paths.get(currentItemSelected.toString());
                     Path destination = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/startItems/"+currentItemSelected.getName());
