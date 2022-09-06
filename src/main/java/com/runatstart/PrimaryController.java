@@ -3,7 +3,6 @@ package com.runatstart;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,12 +24,11 @@ public class PrimaryController implements Initializable{
     private ListView<File> startItems;
     
     @FXML
-    private void showItems(String pathname, ListView<File> listV) throws IOException { //TODO: do not add x to allItems if already in startItems
+    private void showItems(String pathname, ListView<File> listV) throws IOException {
         
         File f = new File(pathname);
         File[] fileList = f.listFiles();
         for (File file : fileList) {
-            
             if(file.isFile()){
                 listV.getItems().add(file);
             }else{
@@ -46,8 +44,8 @@ public class PrimaryController implements Initializable{
     private void RefreshLists() throws IOException {
         startItems.getItems().clear();
         allItems.getItems().clear();
-        showItems("C:/Users/Emanuel/Desktop/TestFolder/startItems",startItems);
-        showItems("C:/Users/Emanuel/Desktop/TestFolder/allItems",allItems);
+        showItems("C:/Users/Emanuel/Desktop/TestFolder/startItems/",startItems);
+        showItems("C:/Users/Emanuel/Desktop/TestFolder/allItems/",allItems);
         
         //Removing files from the AllItems ListView for UX
         List<File> toRemove = new ArrayList<>();
@@ -56,12 +54,9 @@ public class PrimaryController implements Initializable{
                 if(fS.getName().compareTo(fA.getName())==0){
                     toRemove.add(fA);
                 }
-                
             }
-            
         }
         allItems.getItems().removeAll(toRemove);
-        System.out.println("Lists refreshed");
     }
 
     @FXML
@@ -74,15 +69,9 @@ public class PrimaryController implements Initializable{
 
             @Override
             public void handle(MouseEvent click) {//Removes the clicked file to the startup folder
-                
                 if (click.getClickCount() >= 2) {
-                   
-                   File currentItemSelected = startItems.getSelectionModel().getSelectedItem();
-                   
-                    
+                    File currentItemSelected = startItems.getSelectionModel().getSelectedItem();
                     Path source = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/startItems/"+currentItemSelected.getName());
-                    
-                    
                     try {
                         Files.delete(source);;
                         RefreshLists();
@@ -91,8 +80,6 @@ public class PrimaryController implements Initializable{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    
-                    
                 }
             }
         });
@@ -103,16 +90,10 @@ public class PrimaryController implements Initializable{
 
             @Override
             public void handle(MouseEvent click) {//Copies the clicked file to the startup folder
-                
                 if (click.getClickCount() >= 2) {
-                   
-                   File currentItemSelected = allItems.getSelectionModel().getSelectedItem();
-                   
-                    
-                    Path source = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/allItems/"+currentItemSelected.getName());
+                    File currentItemSelected = allItems.getSelectionModel().getSelectedItem();
+                    Path source = Paths.get(currentItemSelected.toString());
                     Path destination = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/startItems/"+currentItemSelected.getName());
-                    
-                    
                     try {
                         Files.copy(source, destination);
                         RefreshLists();
@@ -121,8 +102,6 @@ public class PrimaryController implements Initializable{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    
-                    
                 }
             }
         });
