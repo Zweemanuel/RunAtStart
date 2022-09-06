@@ -3,6 +3,12 @@ package com.runatstart;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.EventHandler;
@@ -20,22 +26,13 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private void showItems(String pathname, ListView<File> listV) throws IOException { //TODO: do not add x to allItems if already in startItems
-        Boolean found = false;
+        
         File f = new File(pathname);
         File[] fileList = f.listFiles();
         for (File file : fileList) {
             
-            if(file.isFile()){//FIX fix this, why is file not found???
-                for(File fileS : allItems.getItems()){
-                    if(file.getName()==fileS.getName()){
-                        found=true;
-                        System.out.println("FOUND");
-                    }
-                }
-                if(!found){
-                    listV.getItems().add(file);
-                }
-                
+            if(file.isFile()){
+                listV.getItems().add(file);
             }else{
                 showItems(pathname+"/"+file.getName(),listV);
             }
@@ -47,19 +44,88 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private void RefreshLists() throws IOException {
-        allItems.getItems().clear();
         startItems.getItems().clear();
+        allItems.getItems().clear();
+        showItems("C:/Users/Emanuel/Desktop/TestFolder/startItems",startItems);
+        showItems("C:/Users/Emanuel/Desktop/TestFolder/allItems",allItems);
         
-        showItems("C:/ProgramData/Microsoft/Windows/Start Menu/Programs",allItems);
-        showItems("C:/ProgramData/Microsoft/Windows/Start Menu/Programs/startup",startItems);
-
+        //Removing files from the AllItems ListView for UX
+        List<File> toRemove = new ArrayList<>();
+        for(File fS : startItems.getItems()){
+            for(File fA : allItems.getItems()){
+                if(fS.getName().compareTo(fA.getName())==0){
+                    toRemove.add(fA);
+                }
+                
+            }
+            
+        }
+        allItems.getItems().removeAll(toRemove);
         System.out.println("Lists refreshed");
-        
     }
 
     @FXML
-    private void AddStartItem() throws IOException {
+    private void AddStartItem() throws IOException {//TODO: Open file explorer to add file
         
+    }
+
+    private void removeFromStart(){
+        startItems.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {//Removes the clicked file to the startup folder
+                
+                if (click.getClickCount() >= 2) {
+                   
+                   File currentItemSelected = startItems.getSelectionModel().getSelectedItem();
+                   
+                    
+                    Path source = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/startItems/"+currentItemSelected.getName());
+                    
+                    
+                    try {
+                        Files.delete(source);;
+                        RefreshLists();
+                        // Less Reliable but more cpu efficient UX vvv
+                        //startItems.getItems().remove(currentItemSelected);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    
+                    
+                }
+            }
+        });
+    }
+
+    private void moveToStart(){
+        allItems.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {//Copies the clicked file to the startup folder
+                
+                if (click.getClickCount() >= 2) {
+                   
+                   File currentItemSelected = allItems.getSelectionModel().getSelectedItem();
+                   
+                    
+                    Path source = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/allItems/"+currentItemSelected.getName());
+                    Path destination = Paths.get("C:/Users/Emanuel/Desktop/TestFolder/startItems/"+currentItemSelected.getName());
+                    
+                    
+                    try {
+                        Files.copy(source, destination);
+                        RefreshLists();
+                        // Less Reliable but more cpu efficient UX vvv
+                        //startItems.getItems().add(currentItemSelected);allItems.getItems().remove(currentItemSelected);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    
+                    
+                }
+            }
+        });
     }
 
     @Override
@@ -69,23 +135,9 @@ public class PrimaryController implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        allItems.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent click) {//Copies the clicked file to the startup folder and removes it from the list
-                
-                if (click.getClickCount() >= 2) {
-                   //Get current selected item
-                   File currentItemSelected = allItems.getSelectionModel().getSelectedItem();
-                   
-                    startItems.getItems().add(currentItemSelected);
-                    allItems.getItems().remove(currentItemSelected);
-                   
-                   
-                }
-            }
-        });
+        moveToStart();
+        removeFromStart();
+        
     }
 
 }
