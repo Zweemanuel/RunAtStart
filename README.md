@@ -1,5 +1,5 @@
 # runatstart
 
-## Functionality
+## JavaFX Application
 
-Manages the applications that are to run at the startup of the machine.
+Manage programs that run at startup of machine.
