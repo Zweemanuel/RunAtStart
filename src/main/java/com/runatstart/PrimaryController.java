@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
@@ -28,6 +29,8 @@ public class PrimaryController implements Initializable{
     private ListView<File> allItems,startItems;
     @FXML
     Label allItemsAmount,startItemsAmount;
+    @FXML
+    TextField searchAllItems;
     
     // Only show the NAME of the Program and not the Path
     public void changeListView(ListView<File> list){ 
@@ -85,7 +88,8 @@ public class PrimaryController implements Initializable{
         }
     }
 
-
+    
+    
     //Refresh the ListView & Remove unnecessary files (Only on the View)
     @FXML
     private void RefreshLists() throws IOException {
@@ -97,8 +101,7 @@ public class PrimaryController implements Initializable{
         //User specific
         showItems(startUserPath,startItems);
         showItems(allUserPath,allItems);
-        
-        //Removing files from the AllItems ListView for UX
+        //Gathering files to remove (already in startItems)
         List<File> toRemove = new ArrayList<>();
         for(File fS : startItems.getItems()){
             for(File fA : allItems.getItems()){
@@ -107,6 +110,15 @@ public class PrimaryController implements Initializable{
                 }
             }
         }
+        //Gathering files to remove (Based on the search textfield)
+        if(searchAllItems!=null){
+            for(File fS : allItems.getItems()){
+                if(!fS.getName().contains(searchAllItems.getText())){
+                    toRemove.add(fS);
+                }
+            }
+        }
+        //Removing gathered files
         allItems.getItems().removeAll(toRemove);
         allItemsAmount.setText(""+allItems.getItems().size()+" Item(s)");
         startItemsAmount.setText(""+startItems.getItems().size()+" Item(s)");

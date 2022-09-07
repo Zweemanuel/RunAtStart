@@ -9,6 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -43,15 +44,16 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
-                  <Label alignment="CENTER" layoutX="152.0" layoutY="14.0" minWidth="60.0" prefHeight="27.0" prefWidth="131.0" style="&#10;" text="Applications" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" layoutX="305.0" layoutY="8.0" minWidth="60.0" prefHeight="31.0" prefWidth="131.0" style="&#10;" text="Applications" textAlignment="CENTER" wrapText="false" AnchorPane.topAnchor="8.0">
                     <font>
-                      <Font size="18.0" fx:id="x1" />
+                      <Font size="21.0" fx:id="x1" />
                     </font>
                     <textFill>
                       <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
                     </textFill>
                   </Label>
-                        <ListView fx:id="allItems" layoutX="14.0" layoutY="42.0" prefHeight="505.0" prefWidth="420.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
+                        <ListView fx:id="allItems" layoutX="14.0" layoutY="43.0" prefHeight="504.0" prefWidth="420.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
+                        <TextField fx:id="searchAllItems" layoutX="14.0" layoutY="15.0" onKeyReleased="#RefreshLists" prefHeight="25.0" prefWidth="291.0" promptText="Search application..." AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="11.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -60,11 +62,11 @@
                <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="446.0">
               <children>
-                <Label alignment="CENTER" font="$x1" layoutX="155.0" layoutY="11.0" prefHeight="31.0" prefWidth="135.0" style="&#10;" text="Run at start" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                        <ListView fx:id="startItems" layoutX="14.0" layoutY="42.0" prefHeight="505.0" prefWidth="420.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
-                        <Button fx:id="addStartItem" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddStartItem" text="Add from explorer" AnchorPane.bottomAnchor="510.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="318.0" AnchorPane.topAnchor="14.0">
+                <Label alignment="CENTER" font="$x1" layoutX="314.0" layoutY="8.0" prefHeight="31.0" prefWidth="118.0" style="&#10;" text="Run at start" textAlignment="CENTER" textFill="$x2" wrapText="false" AnchorPane.topAnchor="8.0" />
+                        <ListView fx:id="startItems" layoutX="14.0" layoutY="42.0" prefHeight="505.0" prefWidth="418.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
+                        <Button fx:id="addStartItem" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddStartItem" prefHeight="27.0" prefWidth="128.0" text="Add from explorer" AnchorPane.bottomAnchor="513.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="304.0" AnchorPane.topAnchor="11.0">
                            <font>
-                              <Font name="Calibri" size="12.0" />
+                              <Font name="Calibri" size="14.0" />
                            </font></Button>
               </children>
             </AnchorPane>
