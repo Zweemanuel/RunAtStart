@@ -21,7 +21,8 @@ import javafx.scene.input.MouseEvent;
 public class PrimaryController implements Initializable{
 
     String allPath = "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/", startPath = "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp/";
-
+    String allUserPath ="C:/Users/"+System.getProperty("user.name")+"/AppData/Roaming/Microsoft/Windows/Start Menu/Programs", startUserPath ="C:/Users/"+System.getProperty("user.name")+"/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/StartUp";
+    
     @FXML
     private ListView<File> allItems,startItems;
     @FXML
@@ -49,7 +50,7 @@ public class PrimaryController implements Initializable{
         File[] fileList = f.listFiles();
         for (File file : fileList) {
             if(file.isFile() ){
-                if(file.getName().contains(".lnk")){//Only show shortcuts to applications
+                if(file.getName().contains(".lnk") && !file.getName().contains("Uninstall")){//Only show shortcuts to applications
                     listV.getItems().add(file);
                 }
             }else{
@@ -64,8 +65,12 @@ public class PrimaryController implements Initializable{
     private void RefreshLists() throws IOException {
         startItems.getItems().clear();
         allItems.getItems().clear();
+        //All Users
         showItems(startPath,startItems);
         showItems(allPath,allItems);
+        //User specific
+        showItems(startUserPath,startItems);
+        showItems(allUserPath,allItems);
         
         //Removing files from the AllItems ListView for UX
         List<File> toRemove = new ArrayList<>();
@@ -93,7 +98,7 @@ public class PrimaryController implements Initializable{
             public void handle(MouseEvent click) {//Removes the clicked file to the startup folder
                 if (click.getClickCount() >= 2) {
                     File currentItemSelected = startItems.getSelectionModel().getSelectedItem();
-                    Path source = Paths.get(startPath+currentItemSelected.getName());
+                    Path source = Paths.get(currentItemSelected.toURI());
                     try {
                         Files.delete(source);;
                         RefreshLists();
