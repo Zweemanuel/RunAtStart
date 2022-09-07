@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
 public class PrimaryController implements Initializable{
 
@@ -28,7 +29,8 @@ public class PrimaryController implements Initializable{
     @FXML
     Label allItemsAmount,startItemsAmount;
     
-    public void changeListView(ListView<File> list){
+    // Only show the NAME of the Program and not the Path
+    public void changeListView(ListView<File> list){ 
         list.setCellFactory(lv -> new ListCell<File>() {
             @Override
             public void updateItem(File item, boolean empty) {
@@ -41,8 +43,31 @@ public class PrimaryController implements Initializable{
             }
         });
     }
-    
 
+    //Add a file using the file explorer
+    @FXML
+    private void AddStartItem() throws IOException {
+        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File selectedFile = fileChooser.showOpenDialog(null);
+        System.out.println(selectedFile.getAbsolutePath());
+        if(selectedFile!=null && (selectedFile.getName().contains(".lnk") || selectedFile.getName().contains(".exe")|| selectedFile.getName().contains(".EXE"))){
+            
+            Path source = Paths.get(selectedFile.toString());
+            Path destination = Paths.get(startPath+selectedFile.getName());
+            try {
+                Files.copy(source, destination);
+                RefreshLists();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("Invalid file");
+        }
+    }
+    
+    //Populate the ListView
     @FXML
     private void showItems(String pathname, ListView<File> listV) throws IOException {
         
@@ -50,7 +75,8 @@ public class PrimaryController implements Initializable{
         File[] fileList = f.listFiles();
         for (File file : fileList) {
             if(file.isFile() ){
-                if(file.getName().contains(".lnk") && !file.getName().contains("Uninstall")){//Only show shortcuts to applications
+                //Only show shortcuts to applications
+                if(!file.getName().contains("Uninstall") && (file.getName().contains(".lnk") || file.getName().contains(".exe")|| file.getName().contains(".EXE"))){
                     listV.getItems().add(file);
                 }
             }else{
@@ -60,7 +86,7 @@ public class PrimaryController implements Initializable{
     }
 
 
-    
+    //Refresh the ListView & Remove unnecessary files (Only on the View)
     @FXML
     private void RefreshLists() throws IOException {
         startItems.getItems().clear();
@@ -86,11 +112,8 @@ public class PrimaryController implements Initializable{
         startItemsAmount.setText(""+startItems.getItems().size()+" Item(s)");
     }
 
-    @FXML
-    private void AddStartItem() throws IOException {//TODO: Open file explorer to add file
-        
-    }
-
+    
+    //Remove files from the StartUp Folder
     private void removeFromStart(){
         startItems.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
 
@@ -100,10 +123,8 @@ public class PrimaryController implements Initializable{
                     File currentItemSelected = startItems.getSelectionModel().getSelectedItem();
                     Path source = Paths.get(currentItemSelected.toURI());
                     try {
-                        Files.delete(source);;
+                        Files.delete(source);
                         RefreshLists();
-                        // Less Reliable but more cpu efficient UX vvv
-                        //startItems.getItems().remove(currentItemSelected);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -112,11 +133,12 @@ public class PrimaryController implements Initializable{
         });
     }
 
+    //Pushes Programs to start on ALL Users
     private void moveToStart(){
         allItems.setOnMouseClicked((EventHandler<? super MouseEvent>) new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent click) {//Copies the clicked file to the startup folder
+            public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
                     File currentItemSelected = allItems.getSelectionModel().getSelectedItem();
                     Path source = Paths.get(currentItemSelected.toString());
@@ -124,8 +146,6 @@ public class PrimaryController implements Initializable{
                     try {
                         Files.copy(source, destination);
                         RefreshLists();
-                        // Less Reliable but more cpu efficient UX vvv
-                        //startItems.getItems().add(currentItemSelected);allItems.getItems().remove(currentItemSelected);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
