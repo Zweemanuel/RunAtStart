@@ -113,7 +113,7 @@ public class PrimaryController implements Initializable{
         //Gathering files to remove (Based on the search textfield)
         if(searchAllItems!=null){
             for(File fS : allItems.getItems()){
-                if(!fS.getName().contains(searchAllItems.getText())){
+                if(!fS.getName().toLowerCase().contains(searchAllItems.getText().toLowerCase())){
                     toRemove.add(fS);
                 }
             }
