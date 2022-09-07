@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -22,9 +23,9 @@ public class PrimaryController implements Initializable{
     String allPath = "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/", startPath = "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp/";
 
     @FXML
-    private ListView<File> allItems;
+    private ListView<File> allItems,startItems;
     @FXML
-    private ListView<File> startItems;
+    Label allItemsAmount,startItemsAmount;
     
     public void changeListView(ListView<File> list){
         list.setCellFactory(lv -> new ListCell<File>() {
@@ -76,6 +77,8 @@ public class PrimaryController implements Initializable{
             }
         }
         allItems.getItems().removeAll(toRemove);
+        allItemsAmount.setText(""+allItems.getItems().size()+" Item(s)");
+        startItemsAmount.setText(""+startItems.getItems().size()+" Item(s)");
     }
 
     @FXML
@@ -128,14 +131,6 @@ public class PrimaryController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        
-        // Path path = Paths.get("C:/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp");
-
-        // try {
-        //     Files.setAttribute(path, "dos:readonly", false);
-        // } catch (IOException e1) {
-        //     e1.printStackTrace();
-        // }
         try {
             RefreshLists();
         } catch (IOException e) {
