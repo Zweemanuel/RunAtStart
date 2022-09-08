@@ -4,7 +4,7 @@
 
 Manage programs that run at startup of machine.
 
-![image](https://user-images.githubusercontent.com/79989883/188888621-d28d2535-2125-453a-8c17-65d7a4e32f03.png)
+![image](https://user-images.githubusercontent.com/79989883/189085687-2c006ea0-45f7-4bc1-acdb-59ca34a1db91.png)
 
 ## Run the application with the .bat file [(JavaFX needed)](https://gluonhq.com/products/javafx/)
 
