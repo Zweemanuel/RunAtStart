@@ -17,7 +17,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.runatstart.PrimaryController">
+<VBox prefHeight="610.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.runatstart.PrimaryController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -38,22 +38,25 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.4977973568281938" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.5" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
             <ScrollPane prefHeight="551.0" prefWidth="376.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
-                  <Label alignment="CENTER" layoutX="305.0" layoutY="8.0" minWidth="60.0" prefHeight="31.0" prefWidth="131.0" style="&#10;" text="Applications" textAlignment="CENTER" wrapText="false" AnchorPane.topAnchor="8.0">
+                  <Label alignment="CENTER" layoutX="286.0" layoutY="6.0" minWidth="60.0" prefHeight="35.0" prefWidth="148.0" style="&#10;" text="Applications" textAlignment="CENTER" wrapText="false" AnchorPane.topAnchor="6.0">
                     <font>
-                      <Font size="21.0" fx:id="x1" />
+                      <Font size="24.0" fx:id="x1" />
                     </font>
                     <textFill>
                       <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
                     </textFill>
                   </Label>
-                        <ListView fx:id="allItems" layoutX="14.0" layoutY="43.0" prefHeight="504.0" prefWidth="420.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
-                        <TextField fx:id="searchAllItems" layoutX="14.0" layoutY="15.0" onKeyReleased="#RefreshLists" prefHeight="25.0" prefWidth="291.0" promptText="Search application..." AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="11.0" />
+                        <ListView fx:id="allItems" layoutX="14.0" layoutY="48.0" prefHeight="503.0" prefWidth="418.0" />
+                        <TextField fx:id="searchAllItems" layoutX="14.0" layoutY="10.0" onKeyReleased="#RefreshLists" prefHeight="25.0" prefWidth="275.0" promptText="Search application..." AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
                      </children>
                   </AnchorPane>
               </content>
@@ -62,12 +65,12 @@
                <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="446.0">
               <children>
-                <Label alignment="CENTER" font="$x1" layoutX="314.0" layoutY="8.0" prefHeight="31.0" prefWidth="118.0" style="&#10;" text="Run at start" textAlignment="CENTER" textFill="$x2" wrapText="false" AnchorPane.topAnchor="8.0" />
-                        <ListView fx:id="startItems" layoutX="14.0" layoutY="42.0" prefHeight="505.0" prefWidth="418.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
+                <Label alignment="CENTER" font="$x1" layoutX="293.0" layoutY="7.0" prefHeight="35.0" prefWidth="139.0" style="&#10;" text="Run at start" textAlignment="CENTER" textFill="$x2" wrapText="false" AnchorPane.topAnchor="7.0" />
                         <Button fx:id="addStartItem" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddStartItem" prefHeight="27.0" prefWidth="128.0" text="Add from explorer" AnchorPane.bottomAnchor="513.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="304.0" AnchorPane.topAnchor="11.0">
                            <font>
                               <Font name="Calibri" size="14.0" />
                            </font></Button>
+                        <ListView fx:id="startItems" layoutX="14.0" layoutY="48.0" prefHeight="503.0" prefWidth="418.0" />
               </children>
             </AnchorPane>
                </content>
@@ -76,16 +79,18 @@
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" prefWidth="905.0" spacing="5.0" VBox.vgrow="NEVER">
       <children>
-        <Label fx:id="allItemsAmount" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="X Items" HBox.hgrow="ALWAYS">
-          <font>
-            <Font size="11.0" fx:id="x3" />
-          </font>
-          <textFill>
-            <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
-          </textFill>
-        </Label>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-        <Label fx:id="startItemsAmount" font="$x3" maxWidth="-1.0" text="Y Items" textFill="$x4" HBox.hgrow="NEVER" />
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS">
+               <children>
+              <Label fx:id="allItemsAmount" layoutX="200.0" layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="X Items">
+                <font>
+                  <Font size="11.0" fx:id="x3" />
+                </font>
+                <textFill>
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+                </textFill>
+              </Label>
+              <Label fx:id="startItemsAmount" font="$x3" layoutX="655.0" layoutY="1.0" maxWidth="-1.0" text="Y Items" textFill="$x4" />
+               </children></Pane>
       </children>
       <padding>
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
