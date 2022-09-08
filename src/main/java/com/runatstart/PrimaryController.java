@@ -31,7 +31,7 @@ public class PrimaryController implements Initializable{
     Label allItemsAmount,startItemsAmount;
     @FXML
     TextField searchAllItems;
-    
+
     // Only show the NAME of the Program and not the Path
     public void changeListView(ListView<File> list){ 
         list.setCellFactory(lv -> new ListCell<File>() {
@@ -41,7 +41,7 @@ public class PrimaryController implements Initializable{
                 if (empty) {
                     setText(null);
                 } else {
-                    setText(item.getName());
+                    setText(item.getName().substring(0, item.getName().length() - 4));
                 }
             }
         });
