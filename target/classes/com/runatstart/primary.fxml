@@ -44,9 +44,9 @@
         <tabs>
           <Tab text="Windows Startup">
                <content>
-                <SplitPane dividerPositions="0.5" prefHeight="-1.0" prefWidth="-1.0">
+                <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="537.0" prefWidth="900.0" scaleShape="false">
                   <items>
-                        <ScrollPane prefHeight="551.0" prefWidth="376.0">
+                        <ScrollPane prefHeight="535.0" prefWidth="582.0">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0">
                                  <children>
@@ -68,19 +68,26 @@
                               </AnchorPane>
                           </content>
                         </ScrollPane>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane prefHeight="477.0" prefWidth="447.0">
                            <content>
-                        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="446.0">
-                          <children>
-                            <Label alignment="CENTER" font="$x1" layoutX="293.0" layoutY="7.0" prefHeight="35.0" prefWidth="139.0" style="&#10;" text="Run at start" textAlignment="CENTER" textFill="$x2" wrapText="false" AnchorPane.topAnchor="7.0" />
-                                    <Button fx:id="addStartItem" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddStartItem" prefHeight="27.0" prefWidth="128.0" text="Add from explorer" AnchorPane.bottomAnchor="513.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="304.0" AnchorPane.topAnchor="11.0">
+                              <AnchorPane minHeight="0.0" minWidth="0.0">
+                                 <children>
+                                    <Label alignment="CENTER" layoutX="283.0" layoutY="10.0" prefHeight="35.0" prefWidth="139.0" style="&#10;" text="Run at start" textAlignment="CENTER" wrapText="false">
+                                       <font>
+                                          <Font size="24.0" fx:id="x11" />
+                                       </font>
+                                       <textFill>
+                                          <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
+                                       </textFill>
+                                    </Label>
+                                    <Button fx:id="addStartItem1" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddStartItem" prefHeight="27.0" prefWidth="137.0" text="Add from explorer">
                                        <font>
                                           <Font name="Calibri" size="14.0" />
                                        </font>
                                     </Button>
-                                    <ListView fx:id="startItems" layoutX="14.0" layoutY="48.0" prefHeight="475.0" prefWidth="418.0" />
-                          </children>
-                        </AnchorPane>
+                                    <ListView fx:id="startItems" layoutX="14.0" layoutY="48.0" prefHeight="479.0" prefWidth="408.0" />
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </ScrollPane>
                   </items>
