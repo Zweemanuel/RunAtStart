@@ -6,6 +6,8 @@ Manage programs that run at startup of machine.
 
 ![image](https://user-images.githubusercontent.com/79989883/189098080-94e78167-074e-49f2-9c0f-f663a3708526.png)
 
+## Create the runatstart.jar file
+
 ## Run the application with the .bat file [(JavaFX needed)](https://gluonhq.com/products/javafx/)
 
 java -jar --module-path **"C:\Program Files\Java\javafx-sdk-18.0.2\lib"** --add-modules javafx.controls,javafx.fxml runatstart.jar
